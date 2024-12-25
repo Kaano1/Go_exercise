@@ -2,73 +2,38 @@ package main
 
 import "fmt"
 
-type List struct {
-	task string
-	completed bool
-}
 
-var g_list []List
+var g_list [100]List
+
 
 func showQuestions() int {
 	result := -1
-	questions := []string{"If you want to add a task, write 1", "If you want to remove a task, write 2", "If you want to see the list, write 3", "If you want to exit, write 4"}
+	questions := []string{"If you want to add a task, write", "If you want to remove a task, write", "If you want to see the list, write", "If you want to complete one of the task",  "If you want to exit, write"}
 
+	cleanScreen()
 	for index, question := range questions {
-		fmt.Println(index, question)
+		fmt.Println(question, index)
 	}
 	fmt.Scan(&result)
 	return result
 }
 
-func addTask() {
-	fmt.Println("Write the task you want to add:")
-	fmt.Scan(&g_list[len(g_list) - 1].task)
-	g_list[len(g_list) - 1].completed = false
-}
-
-func completedTask() {
-	var index int
-	fmt.Println("Write the index of the task you want to complete:")
-	fmt.Scan(&index)
-	if index < len(g_list) {
-		g_list[index].completed = true
-	} else {
-		fmt.Println("Index out of range")
-	}
-}
-
-func removeTask() {
-	var index int
-	fmt.Println("Write the index of the task you want to remove:")
-	fmt.Scan(&index)
-	if index < len(g_list) {
-		g_list = append(g_list[:index], g_list[index+1:]...)
-	} else {
-		fmt.Println("Index out of range")
-	}
-}
-
-func showList() {
-	for index, task := range g_list {
-		fmt.Println(index, task)
-	}
-}
-
 func main() {
 	var runFunction = []func() {
 		addTask,
-		completedTask,
 		removeTask,
-		showList,}
+		showList,
+		completedTask,
+		}
 	var key int
 
-	for key != 5 {
+	for key != 4 {
 		key = showQuestions()
-		if key <= 4 && key >= 1{
-			runFunction[key-1]()
-		} else {
+		if key <= 3 && key >= 0{
+			runFunction[key]()
+		} else if key != 4 {
 			fmt.Println("Invalid value!")
 		}
 	}
-
+	fmt.Println("See you again bro!")
 }
