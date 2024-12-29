@@ -1,0 +1,10 @@
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.appearance_text {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+} 

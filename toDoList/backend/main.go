@@ -8,13 +8,11 @@ import "github.com/gin-gonic/gin"
 var g_list [100]List
 var router *gin.Engine = gin.Default()
 
-
-
 func main() {
 	router.Use(cors.New(cors.Config{
         AllowOrigins:     []string{"*"},
         AllowMethods:     []string{"GET", "POST","PUT", "PATCH"},
-        AllowHeaders:     []string{"Origin"},
+        AllowHeaders:     []string{"*"},
         ExposeHeaders:    []string{"Content-Length"},
         AllowCredentials: true,
         AllowOriginFunc: func(origin string) bool {

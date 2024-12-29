@@ -8,18 +8,21 @@ func removeFunc(index int) {
 	g_list[index].Task = ""
 	g_list[index].Completed = false
 	for ; index < len(g_list); index++ {
-		if index+1 < len(g_list) {
+		if index + 1 < len(g_list) {
+			g_list[index].ID = g_list[index+1].ID
 			g_list[index].Task = g_list[index+1].Task
 			g_list[index].Completed = g_list[index+1].Completed
-			g_list[index+1].Task = ""
-			g_list[index+1].Completed = false
+			g_list[index + 1].Task = ""
+			g_list[index + 1].Completed = false
+			g_list[index + 1].ID = -1
 		}
 	}
 }
 
 func removeTask(context *gin.Context) {
-	var index int
+	var list List
 
+	index := list.ID
 	context.BindJSON(&index)
 
 	if index > -1 && index < len(g_list) {

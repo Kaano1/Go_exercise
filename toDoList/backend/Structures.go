@@ -1,7 +1,7 @@
 package main
 
 type List struct {
-	ID			string	`json:"id"`
+	ID			int		`json:"id"`
 	Task		string	`json:"task"`
 	Completed	bool	`json:"completed"`
 }

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,10 +9,9 @@ import (
 func showList(context *gin.Context) {
 	var end int = findEmptyIndex()
 
-	fmt.Println(g_list[0])
 	if end > 0  {
 		context.IndentedJSON(http.StatusOK, g_list)
 	} else if end == 0 {
-		context.IndentedJSON(http.StatusOK, g_list)
+		context.IndentedJSON(http.StatusNotFound, "error: there is not task in the list")
 	}
 }
