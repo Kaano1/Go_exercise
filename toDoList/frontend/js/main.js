@@ -17,10 +17,10 @@ async function getTaskList() {
 			method: "GET",
 		}).then(response => response.json());
 	} catch (error) {
-		console.log("Error caught:", error);
 		return;
 	}
 
+	console.log("get:", get);
 	return get
 }
 
@@ -31,10 +31,8 @@ async function getShowList() {
 		return;
 	}
 
-	console.log("hey I'm out");
 	for (let i = 0; i < taskMaster.length; i++) {
 		if (!taskMaster[i].task) {
-			console.log("hey I'm in loop");
 			continue;
 		}
 
@@ -52,7 +50,6 @@ async function getShowList() {
 
 		check_list_doc.appendChild(listItem);
 	}
-	console.log(taskMaster);
 }
 
 function addTask() {
@@ -70,9 +67,11 @@ function addTask() {
 
 function addTaskList() {
 	data.task = document.getElementById("newTask").value;
+	if (data.task.length == 0)
+		return;
 	data.completed = false;
 	data.id = IDs;
-	
+
 	addTask();
 	fetch("http://localhost:9090/addTask", {
 		method: "POST",
@@ -89,7 +88,6 @@ function addTaskList() {
 }
 
 function removeTaskList(id) {
-	console.log(id);
 	fetch("http://localhost:9090/removeTask", {
 		method: "POST",
 		headers: {
@@ -114,7 +112,7 @@ function removeTaskList(id) {
 }
 
 function completedTaskList(index) {
-	console.log(index)
+	console.log("complete index:", index)
 	fetch("http://localhost:9090/completedTask",
 		{
 			method: "POST",
@@ -124,6 +122,9 @@ function completedTaskList(index) {
 			body: JSON.stringify(index),
 		}
 	)
+		.then(response => {
+			console.log("Task completed successfully:", response);
+		})
 }
 
 function observeAllButton() {
@@ -141,7 +142,6 @@ async function examine_completed_list() {
 	}
 
 	for (let i = 0; taskMaster[i].task != "" && i < 100; i++) {
-		console.log("look out fullfill_list_doc");
 		if (taskMaster[i].completed == false)
 			continue;
 		var listItem = document.createElement("li")
@@ -150,7 +150,6 @@ async function examine_completed_list() {
 		listItem.innerHTML = `<strong>${taskMaster[i].task}</strong>`;
 
 		fullfill_list_doc.appendChild(listItem);
-		console.log("look at me fullfill_list_doc");
 	}
 }
 

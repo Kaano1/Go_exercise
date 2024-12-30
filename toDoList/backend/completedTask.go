@@ -12,7 +12,7 @@ func completedTask(context *gin.Context) {
 
 	for i := 0; i < 100; i++ {
 		if g_list[i].ID == index {
-			g_list[index].Completed = !g_list[index].Completed;
+			g_list[i].Completed = !g_list[i].Completed;
 			context.IndentedJSON(http.StatusOK, index)
 			return ;
 		}
