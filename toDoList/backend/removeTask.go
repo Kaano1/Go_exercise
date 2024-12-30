@@ -7,8 +7,8 @@ import "github.com/gin-gonic/gin"
 func removeFunc(index int) {
 	g_list[index].Task = ""
 	g_list[index].Completed = false
-	for ; index < len(g_list); index++ {
-		if index + 1 < len(g_list) {
+	for ; index < 100; index++ {
+		if index + 1 < 100 {
 			g_list[index].ID = g_list[index+1].ID
 			g_list[index].Task = g_list[index+1].Task
 			g_list[index].Completed = g_list[index+1].Completed
@@ -20,16 +20,16 @@ func removeFunc(index int) {
 }
 
 func removeTask(context *gin.Context) {
-	var list List
+	var index int 
 
-	index := list.ID
 	context.BindJSON(&index)
 
-	if index > -1 && index < len(g_list) {
-		removeFunc(index)
-		context.IndentedJSON(http.StatusCreated, index)
-	} else {
-		context.IndentedJSON(http.StatusBadRequest, "error: there is not task in the list")
-		return
-	}
+	for i := 0; i < 100; i++ {
+		if g_list[i].ID == index {
+			removeFunc(i)
+			context.IndentedJSON(http.StatusCreated, index)
+			return ;
+		}
+	}			
+	context.IndentedJSON(http.StatusBadRequest, "error: there is not task in the list")
 }

@@ -3,38 +3,32 @@
 
 <head>
 	<title>"ToDoList"</title>
-	<style src="../css/main.css"></style>
+	<link rel="stylesheet" href="../css/main.css">
+	</link>
 </head>
 
 <body>
 	<s id="main-part">
-		<ul>
-			<li style="list-style-type: none; margin-bottom: 1%;">
+		<menu>
+			<li style="margin-bottom: 1%;">
 				<label for="newTask">New Task:</label>
 				<input type="text" id="newTask" placeholder="New Task">
 				<button onclick="addTaskList()">Submit</button>
 
 			</li>
-			<button id="seeCompleted" onclick="observCompletedButton()" style="margin-bottom: 1%;">See completed</button>
+			<button id="seeCompleted" onclick="observCompletedButton()" style="margin-bottom: 1%;">See
+				completed</button>
 			<button id="seeAll" onclick="observeAllButton()" style="margin-bottom: 1%;">See all</button>
-		</ul>
-	</s>
-
-	<s id="all-list">
-		<menu id="checkbox-list">
-			<li type="none" style="text-decoration: none;">
-				<input type="checkbox">TASk <button onclick="removeTaskList(1)" id="remove-1"
-					style="color: red; margin-left: 1%;">remove</button>
-			</li>
 		</menu>
 	</s>
-
+	<s id="all-list" hidden>
+		<menu id="checkbox-list">
+		</menu>
+	</s>
 	<s id="completed-list" hidden>
 		<menu id="fullfill-list">
-
 		</menu>
 	</s>
-
 </body>
 
 <script src="../js/main.js"></script>

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"net/http"
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,9 +10,11 @@ func completedTask(context *gin.Context) {
 
 	context.BindJSON(&index)
 
-	if index < len(g_list) {
-		g_list[index].Completed = !g_list[index].Completed
-	} else {
-		fmt.Println("Index out of range")
-	}
+	for i := 0; i < 100; i++ {
+		if g_list[i].ID == index {
+			g_list[index].Completed = !g_list[index].Completed;
+			context.IndentedJSON(http.StatusOK, index)
+			return ;
+		}
+	}			
 }

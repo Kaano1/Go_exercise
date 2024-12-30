@@ -1,4 +1,5 @@
-var root = document.getElementById("checkbox-list");
+var check_list_doc = document.getElementById("checkbox-list");
+var fullfill_list_doc = document.getElementById("fullfill-list")
 var taskMaster
 var IDs = 0
 
@@ -49,7 +50,7 @@ async function getShowList() {
             <button id=remove-${taskMaster[i].id} onclick="removeTaskList(${taskMaster[i].id})" style="color: red; margin-left: 1%;">remove</button>
         `;
 
-		root.appendChild(listItem);
+		check_list_doc.appendChild(listItem);
 	}
 	console.log(taskMaster);
 }
@@ -64,16 +65,15 @@ function addTask() {
             <button id=remove-${data.id} onclick="removeTaskList(${data.id})" style="color: red; margin-left: 1%;">remove</button>
         `;
 
-	root.appendChild(listItem);
+	check_list_doc.appendChild(listItem);
 }
 
 function addTaskList() {
 	data.task = document.getElementById("newTask").value;
 	data.completed = false;
 	data.id = IDs;
+	
 	addTask();
-
-
 	fetch("http://localhost:9090/addTask", {
 		method: "POST",
 		body: JSON.stringify(data)
@@ -104,7 +104,7 @@ function removeTaskList(id) {
 			return response.json();
 		})
 		.then(data => {
-			root.innerHTML = ""
+			check_list_doc.innerHTML = ""
 			getShowList();
 			console.log("Task removed successfully:", data);
 		})
@@ -120,7 +120,7 @@ function completedTaskList(index) {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-			},	
+			},
 			body: JSON.stringify(index),
 		}
 	)
@@ -133,23 +133,31 @@ function observeAllButton() {
 	getShowList();
 }
 
-function examine_completed_list() {
+async function examine_completed_list() {
+	taskMaster = await getTaskList();
+
+	if (!taskMaster || taskMaster[0].completed === undefined) {
+		return;
+	}
+
 	for (let i = 0; taskMaster[i].task != "" && i < 100; i++) {
+		console.log("look out fullfill_list_doc");
 		if (taskMaster[i].completed == false)
 			continue;
-		var listItem = document.getElementById("fullfill-list").createElement("li")
+		var listItem = document.createElement("li")
 		listItem.id = `${taskMaster[i].id}`
 
 		listItem.innerHTML = `<strong>${taskMaster[i].task}</strong>`;
 
-		root.appendChild(listItem);
+		fullfill_list_doc.appendChild(listItem);
+		console.log("look at me fullfill_list_doc");
 	}
 }
 
 function observCompletedButton() {
 	document.getElementById("all-list").hidden = true;
 	document.getElementById("completed-list").hidden = false;
-	document.getElementById("completed-list").innerHTML = "";
+	document.getElementById("fullfill-list").innerHTML = "";
 	examine_completed_list();
 }
 
