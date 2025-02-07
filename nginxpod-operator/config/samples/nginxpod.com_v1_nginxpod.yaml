@@ -1,0 +1,9 @@
+apiVersion: nginxpod.com.my.domain/v1
+kind: NginxPod
+metadata:
+  labels:
+    app.kubernetes.io/name: nginxpod
+    app.kubernetes.io/managed-by: kustomize
+  name: nginxpod-sample
+spec:
+  # TODO(user): Add fields here
